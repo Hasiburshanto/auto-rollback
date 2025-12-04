@@ -1,0 +1,22 @@
+
+// For build
+
+:docker build -t auto-rollback-demo:latest .
+
+// For run
+
+docker run -d --name demo-app -p 3000:3000 -v $(pwd)/logs:/app/logs auto-rollback-demo:latest
+
+
+// For build 
+
+docker build -t load-generator:latest ./load-generator
+
+// For Load
+docker run --rm --network=host \
+  -e TARGET_URL=http://localhost:3000 \
+  -e QPS=10 \
+  -e ERROR_RATE=0.5 \
+  -e DURATION_SEC=300 \
+  load-generator:latest
+
