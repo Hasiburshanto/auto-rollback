@@ -18,7 +18,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t auto-rollback-demo:latest ./app
+          docker build -t auto-rollback-demo:latest .
 
       - name: Deploy container
         run: |
