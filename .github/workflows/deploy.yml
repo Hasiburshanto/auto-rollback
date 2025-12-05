@@ -1,0 +1,29 @@
+name: Deploy App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to Docker (optional)
+        run: |
+          echo "Docker already local, no login needed"
+
+      - name: Build Docker image
+        run: |
+          docker build -t auto-rollback-demo:latest ./app
+
+      - name: Deploy container
+        run: |
+          bash scripts/deploy.sh
+
+      - name: Tag deployment
+        run: |
+          echo "Deployed at $(date)" > .deployment-info
