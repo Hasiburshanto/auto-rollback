@@ -16,14 +16,17 @@ jobs:
         run: |
           echo "Docker already local, no login needed"
 
-      - name: Build Docker image
-        run: |
-          docker build -t auto-rollback-demo:latest .
+      #- name: Build Docker image
+      #  run: |
+      #    docker build -t auto-rollback-demo:latest .
 
+      #- name: Deploy container
+      #  run: |
+      #    bash scripts/deploy.sh
       - name: Deploy container
         run: |
-          bash scripts/deploy.sh
-
+          docker compose up -d --build
+          
       - name: Tag deployment
         run: |
           echo "Deployed at $(date)" > .deployment-info
